@@ -1,0 +1,102 @@
+{
+  "tasks": [
+    {
+      "task_id": "cramped_room_single_delivery",
+      "layout_name": "cramped_room",
+      "initial_state": "standard",
+      "target_score": 20,
+      "max_ticks": 400,
+      "notes": "Reach one soup delivery from the standard cramped_room start state.",
+      "reference_trajectories": [
+        {
+          "id": "p0_delivers_first_soup",
+          "actions": [
+            "p0:pickup_onion",
+            "p1:pickup_onion",
+            "p0:place_onion_in_pot",
+            "p1:place_onion_in_pot",
+            "p0:pickup_onion",
+            "p0:place_onion_in_pot",
+            "p1:start_cooking",
+            "p0:pickup_dish",
+            "p0:pickup_soup",
+            "p0:deliver_soup"
+          ]
+        },
+        {
+          "id": "p1_delivers_first_soup",
+          "actions": [
+            "p0:pickup_onion",
+            "p1:pickup_onion",
+            "p0:place_onion_in_pot",
+            "p1:place_onion_in_pot",
+            "p1:pickup_onion",
+            "p1:place_onion_in_pot",
+            "p0:start_cooking",
+            "p1:pickup_dish",
+            "p1:pickup_soup",
+            "p1:deliver_soup"
+          ]
+        }
+      ]
+    },
+    {
+      "task_id": "coordination_ring_single_delivery",
+      "layout_name": "coordination_ring",
+      "initial_state": "standard",
+      "target_score": 20,
+      "max_ticks": 400,
+      "notes": "Reach one soup delivery from the standard coordination_ring start state.",
+      "reference_trajectories": [
+        {
+          "id": "ring_direct_delivery",
+          "actions": [
+            "p0:pickup_onion",
+            "p1:pickup_onion",
+            "p0:place_onion_in_pot",
+            "p1:place_onion_in_pot",
+            "p0:pickup_onion",
+            "p0:place_onion_in_pot",
+            "p1:start_cooking",
+            "p0:pickup_dish",
+            "p0:pickup_soup",
+            "p0:deliver_soup"
+          ]
+        }
+      ]
+    },
+    {
+      "task_id": "forced_coordination_single_delivery",
+      "layout_name": "forced_coordination",
+      "initial_state": "standard",
+      "target_score": 20,
+      "max_ticks": 400,
+      "notes": "Reach one soup delivery from the standard forced_coordination start state.",
+      "reference_trajectories": [
+        {
+          "id": "forced_coordination_counter_exchange",
+          "actions": [
+            "p0:pickup_onion",
+            "p0:place_on_counter",
+            "p1:pickup_from_counter",
+            "p1:place_onion_in_pot",
+            "p0:pickup_onion",
+            "p0:place_on_counter",
+            "p1:pickup_from_counter",
+            "p1:place_onion_in_pot",
+            "p0:pickup_onion",
+            "p0:place_on_counter",
+            "p1:pickup_from_counter",
+            "p1:place_onion_in_pot",
+            "p1:start_cooking",
+            "p0:pickup_dish",
+            "p0:place_on_counter",
+            "p1:pickup_from_counter",
+            "p1:pickup_soup",
+            "p1:deliver_soup"
+          ]
+        }
+      ]
+    }
+  ]
+}
