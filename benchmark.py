@@ -1,9 +1,11 @@
 from overcooked_ai_py.mdp.overcooked_mdp import OvercookedGridworld
 from overcooked_ai_py.mdp.actions import Action
-from openai import OpenAI
 from collections import deque
+import argparse
+import json
+import os
+
 import numpy as np
-import os, json
 
 LAYOUTS = [
     'cramped_room',
@@ -14,7 +16,76 @@ LAYOUTS = [
 ]
 NUM_TICKS = 400
 NUM_TRIALS = 3
-client = OpenAI(api_key=os.environ['OPENAI_API_KEY'])
+DEFAULT_OPENAI_MODEL = "gpt-3.5-turbo"
+DEFAULT_LOCAL_MODEL = "Qwen/Qwen2.5-3B-Instruct"
+
+BACKEND = "openai"
+OPENAI_MODEL = DEFAULT_OPENAI_MODEL
+LOCAL_MODEL = DEFAULT_LOCAL_MODEL
+client = None
+tokenizer = None
+model = None
+
+
+def configure_llm_backend(backend, openai_model=DEFAULT_OPENAI_MODEL, local_model=DEFAULT_LOCAL_MODEL):
+    global BACKEND, OPENAI_MODEL, LOCAL_MODEL
+    BACKEND = backend
+    OPENAI_MODEL = openai_model
+    LOCAL_MODEL = local_model
+
+
+def get_openai_client():
+    global client
+    if client is None:
+        from openai import OpenAI
+
+        client = OpenAI(api_key=os.environ["OPENAI_API_KEY"])
+    return client
+
+
+def get_local_model():
+    global tokenizer, model
+    if tokenizer is None or model is None:
+        import torch
+        from transformers import AutoModelForCausalLM, AutoTokenizer
+
+        print(f"Loading local model: {LOCAL_MODEL}")
+        tokenizer = AutoTokenizer.from_pretrained(LOCAL_MODEL)
+        model = AutoModelForCausalLM.from_pretrained(
+            LOCAL_MODEL,
+            torch_dtype="auto",
+            device_map="auto",
+        )
+    return tokenizer, model
+
+
+def query_openai(prompt):
+    response = get_openai_client().chat.completions.create(
+        model=OPENAI_MODEL,
+        messages=[{"role": "user", "content": prompt}],
+        max_tokens=10,
+        temperature=0.0
+    )
+    return response.choices[0].message.content.strip()
+
+
+def query_local_model(prompt):
+    tokenizer, model = get_local_model()
+    messages = [{"role": "user", "content": prompt}]
+    input_text = tokenizer.apply_chat_template(
+        messages,
+        tokenize=False,
+        add_generation_prompt=True,
+    )
+    inputs = tokenizer(input_text, return_tensors="pt").to(model.device)
+    outputs = model.generate(
+        **inputs,
+        max_new_tokens=10,
+        do_sample=False,
+        pad_token_id=tokenizer.eos_token_id,
+    )
+    generated = outputs[0][inputs["input_ids"].shape[1]:]
+    return tokenizer.decode(generated, skip_special_tokens=True).strip()
 
 def is_adjacent_to(pos_a, pos_b):
     return abs(pos_a[0]-pos_b[0]) + abs(pos_a[1]-pos_b[1]) == 1
@@ -157,16 +228,13 @@ Avoid doing the same thing as {other_name}.
 Reply with one of: get_plate, get_onion"""
 
     try:
-        response = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[{"role": "user", "content": prompt}],
-            max_tokens=10,
-            temperature=0.0
-        )
-        reply = response.choices[0].message.content.strip().lower()
+        if BACKEND == "local":
+            reply = query_local_model(prompt).lower()
+        else:
+            reply = query_openai(prompt).lower()
         return 'get_plate' if 'plate' in reply else 'get_onion'
     except Exception as e:
-        print(f"  LLM error: {e}")
+        print(f"  LLM error ({BACKEND}): {e}")
         return 'get_plate'
 
 def goal_to_action(goal, state, mdp, player_id):
@@ -233,6 +301,26 @@ def run_benchmark(layout_name):
     return mean, stderr, scores
 
 if __name__ == '__main__':
+    parser = argparse.ArgumentParser()
+    parser.add_argument(
+        "--backend",
+        choices=["openai", "local"],
+        default="openai",
+        help="LLM backend to use"
+    )
+    parser.add_argument(
+        "--openai-model",
+        default=DEFAULT_OPENAI_MODEL,
+        help="OpenAI model name for --backend openai"
+    )
+    parser.add_argument(
+        "--local-model",
+        default=DEFAULT_LOCAL_MODEL,
+        help="Transformers model name for --backend local"
+    )
+    args = parser.parse_args()
+
+    configure_llm_backend(args.backend, args.openai_model, args.local_model)
     all_results = {}
     for layout in LAYOUTS:
         print(f"\n=== {layout} ===")

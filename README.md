@@ -15,6 +15,18 @@ export OPENAI_API_KEY=your_key_here
 python benchmark.py
 ```
 
+## Running With A Local Model
+```bash
+pip install torch transformers accelerate sentencepiece
+python benchmark.py --backend local
+```
+
+Optional: override the default local model.
+
+```bash
+python benchmark.py --backend local --local-model Qwen/Qwen2.5-3B-Instruct
+```
+
 ## Project Structure
 - `benchmark.py` — LLM agent and game loop
 - `vlm_agent.py` — VLM agent (Qwen-VL) [Josh]
