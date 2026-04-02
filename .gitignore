@@ -1,0 +1,8 @@
+__pycache__/
+*.pyc
+*.json
+game_logs/
+game_trajectories/
+*.npy
+*.log
+.env
