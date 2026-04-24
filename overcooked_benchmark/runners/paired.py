@@ -5,10 +5,11 @@ from typing import Any
 
 from overcooked_ai_py.mdp.overcooked_mdp import OvercookedGridworld
 
-from overcooked_benchmark.agents import AgentObservation, OpenAITextAgent, OpenAIVisionAgent, ScriptedAgent
+from overcooked_benchmark.agents import AgentObservation, LocalTextAgent, OpenAITextAgent, OpenAIVisionAgent, ScriptedAgent
 from overcooked_benchmark.config import DEFAULT_OPENAI_MODEL, DEFAULT_VISION_MODEL, PLAYER_NAMES
 from overcooked_benchmark.evaluation import evaluate_task_trajectory
 from overcooked_benchmark.openai_client import get_openai_client
+from overcooked_benchmark.local_client import get_local_text_client
 from overcooked_benchmark.phase import task_phase_hint
 from overcooked_benchmark.symbolic import classify_player_action
 from overcooked_benchmark.tasks import get_task_by_id
@@ -22,8 +23,30 @@ from overcooked_benchmark.traces import (
 )
 
 
-def make_agent_pair(pair: str, text_model: str, vision_model: str):
+def make_agent_pair(
+    pair: str,
+    backend: str,
+    text_model: str,
+    vision_model: str,
+    local_model: str,
+    dtype: str,
+    device_map: str,
+    max_new_tokens: int,
+):
     if pair == "llm-llm":
+        if backend == "local":
+            client = get_local_text_client(
+                model_name=local_model,
+                dtype=dtype,
+                device_map=device_map,
+                max_new_tokens=max_new_tokens,
+            )
+            return [
+                LocalTextAgent(0, PLAYER_NAMES[0], client),
+                LocalTextAgent(1, PLAYER_NAMES[1], client),
+            ]
+        if backend != "openai":
+            raise ValueError(f"Unsupported backend for llm-llm: {backend}")
         client = get_openai_client()
         return [
             OpenAITextAgent(0, PLAYER_NAMES[0], client, text_model),
@@ -127,8 +150,13 @@ def run_agent_pair(
     layout_name: str,
     task_id: str,
     max_ticks: int,
+    backend: str = "openai",
     text_model: str = DEFAULT_OPENAI_MODEL,
     vision_model: str = DEFAULT_VISION_MODEL,
+    local_model: str = "Qwen/Qwen2.5-7B-Instruct",
+    dtype: str = "auto",
+    device_map: str = "auto",
+    max_new_tokens: int = 160,
     collect_trajectory: bool = False,
     trace_output_path: str | Path | None = None,
 ):
@@ -138,7 +166,16 @@ def run_agent_pair(
 
     mdp = OvercookedGridworld.from_layout_name(layout_name)
     state = mdp.get_standard_start_state()
-    agents = make_agent_pair(pair, text_model=text_model, vision_model=vision_model)
+    agents = make_agent_pair(
+        pair,
+        backend=backend,
+        text_model=text_model,
+        vision_model=vision_model,
+        local_model=local_model,
+        dtype=dtype,
+        device_map=device_map,
+        max_new_tokens=max_new_tokens,
+    )
     score = 0
     messages = ["", ""]
     executed_actions: list[str] = []
@@ -157,10 +194,10 @@ def run_agent_pair(
             "meta": {
                 "layout": layout_name,
                 "pair": pair,
-                "backend": "openai" if pair != "scripted-scripted" else "scripted",
+                "backend": backend if pair != "scripted-scripted" else "scripted",
                 "openai_model": text_model,
                 "vision_model": vision_model,
-                "local_model": "",
+                "local_model": local_model if backend == "local" else "",
                 "max_ticks": max_ticks,
                 "task_id": task_id,
             },

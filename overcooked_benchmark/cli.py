@@ -12,6 +12,7 @@ from overcooked_benchmark.config import (
 )
 from overcooked_benchmark.runners.paired import run_agent_pair
 from overcooked_benchmark.runners.suite import run_experiment_suite
+from overcooked_benchmark.summarize import flatten_run, format_summary_table, summarize_rows
 
 
 def parse_args():
@@ -24,8 +25,13 @@ def parse_args():
     )
     parser.add_argument("--layout", choices=LAYOUTS, help="Run a single layout and task trace.")
     parser.add_argument("--task-id", default="cramped_room_single_delivery", help="Task metadata to use for trajectory metrics.")
+    parser.add_argument("--backend", choices=["openai", "local"], default="openai", help="Inference backend for llm-llm agents.")
     parser.add_argument("--openai-model", default=DEFAULT_OPENAI_MODEL, help="OpenAI text model for --pair llm-llm.")
     parser.add_argument("--vision-model", default=DEFAULT_VISION_MODEL, help="OpenAI vision model for --pair vlm-vlm.")
+    parser.add_argument("--local-model", default="Qwen/Qwen2.5-7B-Instruct", help="Hugging Face model for --backend local.")
+    parser.add_argument("--dtype", default="auto", help="Local model dtype: auto, float16, bfloat16, or float32.")
+    parser.add_argument("--device-map", default="auto", help="Transformers device_map for local models.")
+    parser.add_argument("--max-new-tokens", type=int, default=160, help="Local model generation token budget.")
     parser.add_argument("--trials", type=int, default=DEFAULT_TRIALS, help="Trials for suite runs.")
     parser.add_argument("--max-ticks", type=int, default=DEFAULT_MAX_TICKS, help="Number of game ticks to simulate.")
     parser.add_argument("--collect-trajectory", action="store_true", help="Collect a detailed replay trajectory for the UI.")
@@ -54,8 +60,13 @@ def main():
             layout_name=args.layout,
             task_id=args.task_id,
             max_ticks=args.max_ticks,
+            backend=args.backend,
             text_model=args.openai_model,
             vision_model=args.vision_model,
+            local_model=args.local_model,
+            dtype=args.dtype,
+            device_map=args.device_map,
+            max_new_tokens=args.max_new_tokens,
             collect_trajectory=args.collect_trajectory,
             trace_output_path=args.trace_output if args.collect_trajectory else None,
         )
@@ -72,12 +83,18 @@ def main():
         task_ids=[args.task_id],
         trials=args.trials,
         max_ticks=args.max_ticks,
+        backend=args.backend,
         text_model=args.openai_model,
         vision_model=args.vision_model,
+        local_model=args.local_model,
+        dtype=args.dtype,
+        device_map=args.device_map,
+        max_new_tokens=args.max_new_tokens,
         output_path=args.experiment_output,
     )
     print(f"Saved experiment results to {args.experiment_output}")
     print(f"Runs: {len(aggregate['results'])}")
+    print(format_summary_table(summarize_rows([flatten_run(run, default_model=aggregate["model"]) for run in aggregate["results"]])))
 
 
 if __name__ == "__main__":

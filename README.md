@@ -30,12 +30,21 @@ uv run python benchmark.py --pair llm-llm --layout cramped_room --max-ticks 80 -
 uv run python benchmark.py --pair vlm-vlm --layout cramped_room --max-ticks 80 --collect-trajectory --vision-model gpt-4o
 ```
 
+Run local text models, for example on SCC:
+
+```bash
+uv run python benchmark.py --pair llm-llm --backend local --local-model Qwen/Qwen2.5-7B-Instruct --trials 3 --max-ticks 60 --experiment-output results/llm_qwen25_7b.json
+```
+
 Run a small suite:
 
 ```bash
-uv run python benchmark.py --pair llm-llm --trials 3 --max-ticks 80 --experiment-output results/llm_llm.json
-uv run python benchmark.py --pair vlm-vlm --trials 3 --max-ticks 80 --experiment-output results/vlm_vlm.json
+uv run python benchmark.py --pair llm-llm --openai-model gpt-5.4 --trials 3 --max-ticks 60 --experiment-output results/llm_llm.json
+uv run python benchmark.py --pair vlm-vlm --vision-model gpt-5.4 --trials 3 --max-ticks 60 --experiment-output results/vlm_vlm.json
+uv run python -m overcooked_benchmark.summarize results/llm_llm.json results/vlm_vlm.json
 ```
+
+Suite runs also print the same summary table automatically.
 
 ## Collab-Overcooked Metrics
 
@@ -63,6 +72,7 @@ The paired runner records score, success, ticks, TES, PC, invalid action count, 
 - `overcooked_benchmark/tasks.py` — task definitions and reference trajectories
 - `overcooked_benchmark/metrics.py` — TES, ITES, PC, IC, and RC metric helpers
 - `overcooked_benchmark/symbolic.py` — transition-to-symbolic-action extraction
+- `overcooked_benchmark/summarize.py` — result table summarizer
 - `overcooked_benchmark/traces.py` — replay JSON serialization
 - `overcooked_benchmark/rendering.py` — board renderer used for VLM observations
 - `tests/` — unit and smoke tests

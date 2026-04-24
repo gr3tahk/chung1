@@ -4,14 +4,19 @@ version = "0.1.0"
 description = "Paired LLM/VLM Overcooked benchmark with trajectory metrics."
 requires-python = ">=3.11"
 dependencies = [
+    "accelerate>=1.13.0",
     "numpy",
     "openai",
     "overcooked-ai",
     "pillow",
+    "sentencepiece>=0.2.1",
+    "torch>=2.11.0",
+    "transformers>=5.6.2",
 ]
 
 [project.scripts]
 overcooked-benchmark = "overcooked_benchmark.cli:main"
+overcooked-summarize = "overcooked_benchmark.summarize:main"
 
 [tool.uv]
 package = true
