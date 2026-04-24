@@ -1,8 +1,11 @@
 __pycache__/
 *.pyc
-*.json
 game_logs/
 game_trajectories/
 *.npy
 *.log
 .env
+.venv/
+llm_results.json
+replay-ui/node_modules/
+replay-ui/dist/

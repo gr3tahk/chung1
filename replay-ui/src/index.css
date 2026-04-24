@@ -1,0 +1,74 @@
+:root {
+  font-family: 'Avenir Next', 'Trebuchet MS', 'Gill Sans', sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+  color: #2e2b28;
+  background:
+    radial-gradient(circle at top left, rgba(255, 233, 196, 0.95), transparent 28%),
+    radial-gradient(circle at top right, rgba(202, 233, 196, 0.88), transparent 30%),
+    linear-gradient(180deg, #fff8ef 0%, #fdf5e8 54%, #f6ecd8 100%);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  --ink: #2f2a25;
+  --ink-soft: #62584e;
+  --muted: #8a7766;
+  --berry: #db785d;
+  --forest: #507f57;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  min-width: 320px;
+  min-height: 100vh;
+}
+
+body::before,
+body::after {
+  content: '';
+  position: fixed;
+  width: 320px;
+  height: 320px;
+  border-radius: 50%;
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: -1;
+}
+
+body::before {
+  top: -80px;
+  right: -90px;
+  background: rgba(255, 189, 121, 0.28);
+}
+
+body::after {
+  left: -100px;
+  bottom: -110px;
+  background: rgba(137, 199, 151, 0.18);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+h1,
+h2,
+h3,
+p {
+  margin-top: 0;
+}
+
+#root {
+  min-height: 100vh;
+}
