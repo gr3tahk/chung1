@@ -9,8 +9,6 @@
 #$ -o logs/$JOB_NAME.$JOB_ID.out
 
 # Request wall time, 4 CPUs, and 1 A40 GPU
-#$ -l h_rt=04:00:00
-#$ -pe omp 4
 #$ -l gpus=1
 #$ -l gpu_type=A40
 
