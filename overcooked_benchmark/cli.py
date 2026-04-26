@@ -44,6 +44,7 @@ def parse_args():
     parser.add_argument("--max-ticks", type=int, default=DEFAULT_MAX_TICKS, help="Number of game ticks to simulate.")
     parser.add_argument("--collect-trajectory", action="store_true", help="Collect a detailed replay trajectory for the UI.")
     parser.add_argument("--trace-output", default=str(DEFAULT_TRACE_OUTPUT), help="Where to save replay JSON.")
+    parser.add_argument("--suite-trace-dir", help="Save one detailed trajectory JSON per suite trial.")
     parser.add_argument("--experiment-output", default="experiment_results.json", help="Output JSON for suite runs.")
     return parser.parse_args()
 
@@ -100,6 +101,7 @@ def main():
         device_map=args.device_map,
         max_new_tokens=args.max_new_tokens,
         output_path=args.experiment_output,
+        trace_dir=args.suite_trace_dir,
     )
     print(f"Saved experiment results to {args.experiment_output}")
     print(f"Runs: {len(aggregate['results'])}")

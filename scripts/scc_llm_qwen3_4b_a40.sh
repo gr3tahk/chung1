@@ -57,7 +57,8 @@ python benchmark.py \
   --max-new-tokens 160 \
   --trials 3 \
   --max-ticks 60 \
-  --experiment-output results/llm_qwen3_4b_cramped.json
+  --experiment-output results/llm_qwen3_4b_cramped.json \
+  --suite-trace-dir results/qwen3_4b_traces
 
 echo "== summary =="
 python -m overcooked_benchmark.summarize results/llm_qwen3_4b_cramped.json
