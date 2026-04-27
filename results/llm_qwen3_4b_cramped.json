@@ -153,6 +153,7 @@
         "place_onion_in_pot",
         "pickup_onion"
       ],
+      "trace_path": "results/qwen3_4b_traces/llm-llm_local_cramped_room_single_delivery_trial0.json",
       "trial": 0,
       "model": "Qwen/Qwen3-4B-Instruct-2507",
       "max_ticks": 60,
@@ -310,6 +311,7 @@
         "place_onion_in_pot",
         "pickup_onion"
       ],
+      "trace_path": "results/qwen3_4b_traces/llm-llm_local_cramped_room_single_delivery_trial1.json",
       "trial": 1,
       "model": "Qwen/Qwen3-4B-Instruct-2507",
       "max_ticks": 60,
@@ -467,6 +469,7 @@
         "place_onion_in_pot",
         "pickup_onion"
       ],
+      "trace_path": "results/qwen3_4b_traces/llm-llm_local_cramped_room_single_delivery_trial2.json",
       "trial": 2,
       "model": "Qwen/Qwen3-4B-Instruct-2507",
       "max_ticks": 60,
