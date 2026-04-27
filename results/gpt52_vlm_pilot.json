@@ -1,0 +1,489 @@
+{
+  "pair": "vlm-vlm",
+  "backend": "openai",
+  "model": "gpt-5.2",
+  "trials": 3,
+  "max_ticks": 60,
+  "task_ids": [
+    "cramped_room_single_delivery"
+  ],
+  "results": [
+    {
+      "pair": "vlm-vlm",
+      "layout": "cramped_room",
+      "task_id": "cramped_room_single_delivery",
+      "score": 0,
+      "soups_delivered": 0,
+      "success": false,
+      "metrics": {
+        "tes": 0.5714285714285714,
+        "best_reference_id": "single_agent_delivery",
+        "best_reference_actions": [
+          "pickup_onion",
+          "place_onion_in_pot",
+          "pickup_onion",
+          "place_onion_in_pot",
+          "pickup_onion",
+          "place_onion_in_pot",
+          "pickup_dish",
+          "pickup_soup",
+          "deliver_soup"
+        ],
+        "reference_scores": [
+          {
+            "id": "single_agent_delivery",
+            "tes": 0.5714285714285714,
+            "actions": [
+              "pickup_onion",
+              "place_onion_in_pot",
+              "pickup_onion",
+              "place_onion_in_pot",
+              "pickup_onion",
+              "place_onion_in_pot",
+              "pickup_dish",
+              "pickup_soup",
+              "deliver_soup"
+            ]
+          }
+        ],
+        "progress_completeness": {
+          "pc": 0.6103896103896104,
+          "agents": {
+            "0": {
+              "tes": 0.8571428571428571,
+              "best_reference_id": "p0_onion_focus",
+              "best_reference_actions": [
+                "pickup_onion",
+                "place_onion_in_pot",
+                "pickup_onion",
+                "place_onion_in_pot"
+              ],
+              "reference_scores": [
+                {
+                  "id": "p0_all_steps",
+                  "tes": 0.5,
+                  "actions": [
+                    "pickup_onion",
+                    "place_onion_in_pot",
+                    "pickup_onion",
+                    "place_onion_in_pot",
+                    "pickup_onion",
+                    "place_onion_in_pot",
+                    "pickup_dish",
+                    "pickup_soup",
+                    "deliver_soup"
+                  ]
+                },
+                {
+                  "id": "p0_onion_focus",
+                  "tes": 0.8571428571428571,
+                  "actions": [
+                    "pickup_onion",
+                    "place_onion_in_pot",
+                    "pickup_onion",
+                    "place_onion_in_pot"
+                  ]
+                }
+              ]
+            },
+            "1": {
+              "tes": 0.36363636363636365,
+              "best_reference_id": "p1_all_steps",
+              "best_reference_actions": [
+                "pickup_onion",
+                "place_onion_in_pot",
+                "pickup_onion",
+                "place_onion_in_pot",
+                "pickup_onion",
+                "place_onion_in_pot",
+                "pickup_dish",
+                "pickup_soup",
+                "deliver_soup"
+              ],
+              "reference_scores": [
+                {
+                  "id": "p1_all_steps",
+                  "tes": 0.36363636363636365,
+                  "actions": [
+                    "pickup_onion",
+                    "place_onion_in_pot",
+                    "pickup_onion",
+                    "place_onion_in_pot",
+                    "pickup_onion",
+                    "place_onion_in_pot",
+                    "pickup_dish",
+                    "pickup_soup",
+                    "deliver_soup"
+                  ]
+                },
+                {
+                  "id": "p1_onion_plate_delivery",
+                  "tes": 0.2857142857142857,
+                  "actions": [
+                    "pickup_onion",
+                    "place_onion_in_pot",
+                    "pickup_dish",
+                    "pickup_soup",
+                    "deliver_soup"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "invalid_action_count": 0,
+        "success": false,
+        "ticks": 60
+      },
+      "agent_histories": {
+        "0": [
+          "pickup_onion",
+          "pickup_onion",
+          "place_onion_in_pot"
+        ],
+        "1": [
+          "pickup_onion",
+          "pickup_onion"
+        ]
+      },
+      "symbolic_actions": [
+        "pickup_onion",
+        "pickup_onion",
+        "pickup_onion",
+        "place_onion_in_pot",
+        "pickup_onion"
+      ],
+      "trace_path": "results/gpt52_vlm_pilot_traces/vlm-vlm_openai_cramped_room_single_delivery_trial0.json",
+      "trial": 0,
+      "model": "gpt-5.2",
+      "max_ticks": 60,
+      "flat_metrics": {
+        "success": false,
+        "score": 0,
+        "tes": 0.5714285714285714,
+        "pc": 0.6103896103896104,
+        "ticks": 60,
+        "invalid_action_count": 0
+      }
+    },
+    {
+      "pair": "vlm-vlm",
+      "layout": "cramped_room",
+      "task_id": "cramped_room_single_delivery",
+      "score": 0,
+      "soups_delivered": 0,
+      "success": false,
+      "metrics": {
+        "tes": 0.625,
+        "best_reference_id": "single_agent_delivery",
+        "best_reference_actions": [
+          "pickup_onion",
+          "place_onion_in_pot",
+          "pickup_onion",
+          "place_onion_in_pot",
+          "pickup_onion",
+          "place_onion_in_pot",
+          "pickup_dish",
+          "pickup_soup",
+          "deliver_soup"
+        ],
+        "reference_scores": [
+          {
+            "id": "single_agent_delivery",
+            "tes": 0.625,
+            "actions": [
+              "pickup_onion",
+              "place_onion_in_pot",
+              "pickup_onion",
+              "place_onion_in_pot",
+              "pickup_onion",
+              "place_onion_in_pot",
+              "pickup_dish",
+              "pickup_soup",
+              "deliver_soup"
+            ]
+          }
+        ],
+        "progress_completeness": {
+          "pc": 0.5576923076923077,
+          "agents": {
+            "0": {
+              "tes": 0.6153846153846154,
+              "best_reference_id": "p0_all_steps",
+              "best_reference_actions": [
+                "pickup_onion",
+                "place_onion_in_pot",
+                "pickup_onion",
+                "place_onion_in_pot",
+                "pickup_onion",
+                "place_onion_in_pot",
+                "pickup_dish",
+                "pickup_soup",
+                "deliver_soup"
+              ],
+              "reference_scores": [
+                {
+                  "id": "p0_all_steps",
+                  "tes": 0.6153846153846154,
+                  "actions": [
+                    "pickup_onion",
+                    "place_onion_in_pot",
+                    "pickup_onion",
+                    "place_onion_in_pot",
+                    "pickup_onion",
+                    "place_onion_in_pot",
+                    "pickup_dish",
+                    "pickup_soup",
+                    "deliver_soup"
+                  ]
+                },
+                {
+                  "id": "p0_onion_focus",
+                  "tes": 0.5,
+                  "actions": [
+                    "pickup_onion",
+                    "place_onion_in_pot",
+                    "pickup_onion",
+                    "place_onion_in_pot"
+                  ]
+                }
+              ]
+            },
+            "1": {
+              "tes": 0.5,
+              "best_reference_id": "p1_all_steps",
+              "best_reference_actions": [
+                "pickup_onion",
+                "place_onion_in_pot",
+                "pickup_onion",
+                "place_onion_in_pot",
+                "pickup_onion",
+                "place_onion_in_pot",
+                "pickup_dish",
+                "pickup_soup",
+                "deliver_soup"
+              ],
+              "reference_scores": [
+                {
+                  "id": "p1_all_steps",
+                  "tes": 0.5,
+                  "actions": [
+                    "pickup_onion",
+                    "place_onion_in_pot",
+                    "pickup_onion",
+                    "place_onion_in_pot",
+                    "pickup_onion",
+                    "place_onion_in_pot",
+                    "pickup_dish",
+                    "pickup_soup",
+                    "deliver_soup"
+                  ]
+                },
+                {
+                  "id": "p1_onion_plate_delivery",
+                  "tes": 0.5,
+                  "actions": [
+                    "pickup_onion",
+                    "place_onion_in_pot",
+                    "pickup_dish",
+                    "pickup_soup",
+                    "deliver_soup"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "invalid_action_count": 0,
+        "success": false,
+        "ticks": 60
+      },
+      "agent_histories": {
+        "0": [
+          "pickup_onion",
+          "pickup_onion",
+          "pickup_onion",
+          "pickup_dish"
+        ],
+        "1": [
+          "pickup_onion",
+          "place_onion_in_pot",
+          "pickup_onion"
+        ]
+      },
+      "symbolic_actions": [
+        "pickup_onion",
+        "pickup_onion",
+        "pickup_onion",
+        "place_onion_in_pot",
+        "pickup_onion",
+        "pickup_onion",
+        "pickup_dish"
+      ],
+      "trace_path": "results/gpt52_vlm_pilot_traces/vlm-vlm_openai_cramped_room_single_delivery_trial1.json",
+      "trial": 1,
+      "model": "gpt-5.2",
+      "max_ticks": 60,
+      "flat_metrics": {
+        "success": false,
+        "score": 0,
+        "tes": 0.625,
+        "pc": 0.5576923076923077,
+        "ticks": 60,
+        "invalid_action_count": 0
+      }
+    },
+    {
+      "pair": "vlm-vlm",
+      "layout": "cramped_room",
+      "task_id": "cramped_room_single_delivery",
+      "score": 0,
+      "soups_delivered": 0,
+      "success": false,
+      "metrics": {
+        "tes": 0.6153846153846154,
+        "best_reference_id": "single_agent_delivery",
+        "best_reference_actions": [
+          "pickup_onion",
+          "place_onion_in_pot",
+          "pickup_onion",
+          "place_onion_in_pot",
+          "pickup_onion",
+          "place_onion_in_pot",
+          "pickup_dish",
+          "pickup_soup",
+          "deliver_soup"
+        ],
+        "reference_scores": [
+          {
+            "id": "single_agent_delivery",
+            "tes": 0.6153846153846154,
+            "actions": [
+              "pickup_onion",
+              "place_onion_in_pot",
+              "pickup_onion",
+              "place_onion_in_pot",
+              "pickup_onion",
+              "place_onion_in_pot",
+              "pickup_dish",
+              "pickup_soup",
+              "deliver_soup"
+            ]
+          }
+        ],
+        "progress_completeness": {
+          "pc": 0.6190476190476191,
+          "agents": {
+            "0": {
+              "tes": 0.6666666666666666,
+              "best_reference_id": "p0_onion_focus",
+              "best_reference_actions": [
+                "pickup_onion",
+                "place_onion_in_pot",
+                "pickup_onion",
+                "place_onion_in_pot"
+              ],
+              "reference_scores": [
+                {
+                  "id": "p0_all_steps",
+                  "tes": 0.36363636363636365,
+                  "actions": [
+                    "pickup_onion",
+                    "place_onion_in_pot",
+                    "pickup_onion",
+                    "place_onion_in_pot",
+                    "pickup_onion",
+                    "place_onion_in_pot",
+                    "pickup_dish",
+                    "pickup_soup",
+                    "deliver_soup"
+                  ]
+                },
+                {
+                  "id": "p0_onion_focus",
+                  "tes": 0.6666666666666666,
+                  "actions": [
+                    "pickup_onion",
+                    "place_onion_in_pot",
+                    "pickup_onion",
+                    "place_onion_in_pot"
+                  ]
+                }
+              ]
+            },
+            "1": {
+              "tes": 0.5714285714285714,
+              "best_reference_id": "p1_onion_plate_delivery",
+              "best_reference_actions": [
+                "pickup_onion",
+                "place_onion_in_pot",
+                "pickup_dish",
+                "pickup_soup",
+                "deliver_soup"
+              ],
+              "reference_scores": [
+                {
+                  "id": "p1_all_steps",
+                  "tes": 0.36363636363636365,
+                  "actions": [
+                    "pickup_onion",
+                    "place_onion_in_pot",
+                    "pickup_onion",
+                    "place_onion_in_pot",
+                    "pickup_onion",
+                    "place_onion_in_pot",
+                    "pickup_dish",
+                    "pickup_soup",
+                    "deliver_soup"
+                  ]
+                },
+                {
+                  "id": "p1_onion_plate_delivery",
+                  "tes": 0.5714285714285714,
+                  "actions": [
+                    "pickup_onion",
+                    "place_onion_in_pot",
+                    "pickup_dish",
+                    "pickup_soup",
+                    "deliver_soup"
+                  ]
+                }
+              ]
+            }
+          }
+        },
+        "invalid_action_count": 0,
+        "success": false,
+        "ticks": 60
+      },
+      "agent_histories": {
+        "0": [
+          "pickup_onion",
+          "pickup_onion"
+        ],
+        "1": [
+          "pickup_onion",
+          "place_onion_in_pot"
+        ]
+      },
+      "symbolic_actions": [
+        "pickup_onion",
+        "pickup_onion",
+        "place_onion_in_pot",
+        "pickup_onion"
+      ],
+      "trace_path": "results/gpt52_vlm_pilot_traces/vlm-vlm_openai_cramped_room_single_delivery_trial2.json",
+      "trial": 2,
+      "model": "gpt-5.2",
+      "max_ticks": 60,
+      "flat_metrics": {
+        "success": false,
+        "score": 0,
+        "tes": 0.6153846153846154,
+        "pc": 0.6190476190476191,
+        "ticks": 60,
+        "invalid_action_count": 0
+      }
+    }
+  ]
+}
