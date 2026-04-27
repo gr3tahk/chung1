@@ -5,11 +5,12 @@ from typing import Any
 
 from overcooked_ai_py.mdp.overcooked_mdp import OvercookedGridworld
 
-from overcooked_benchmark.agents import AgentObservation, LocalTextAgent, OpenAITextAgent, OpenAIVisionAgent, ScriptedAgent
+from overcooked_benchmark.agents import AgentObservation, LocalTextAgent, LocalVisionAgent, OpenAITextAgent, OpenAIVisionAgent, ScriptedAgent
 from overcooked_benchmark.config import DEFAULT_OPENAI_MODEL, DEFAULT_VISION_MODEL, PLAYER_NAMES
 from overcooked_benchmark.evaluation import evaluate_task_trajectory
 from overcooked_benchmark.openai_client import get_openai_client
 from overcooked_benchmark.local_client import get_local_text_client
+from overcooked_benchmark.local_vision_client import get_local_vision_client
 from overcooked_benchmark.phase import task_phase_hint
 from overcooked_benchmark.symbolic import classify_player_action
 from overcooked_benchmark.tasks import get_task_by_id
@@ -53,6 +54,19 @@ def make_agent_pair(
             OpenAITextAgent(1, PLAYER_NAMES[1], client, text_model),
         ]
     if pair == "vlm-vlm":
+        if backend == "local":
+            client = get_local_vision_client(
+                model_name=local_model,
+                dtype=dtype,
+                device_map=device_map,
+                max_new_tokens=max_new_tokens,
+            )
+            return [
+                LocalVisionAgent(0, PLAYER_NAMES[0], client),
+                LocalVisionAgent(1, PLAYER_NAMES[1], client),
+            ]
+        if backend != "openai":
+            raise ValueError(f"Unsupported backend for vlm-vlm: {backend}")
         client = get_openai_client()
         return [
             OpenAIVisionAgent(0, PLAYER_NAMES[0], client, vision_model),
